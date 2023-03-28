@@ -1,0 +1,14 @@
+﻿Print out:
+
+
+- all members of OPEC(hint: Attribut "memberships", string.Split(...))
+
+- all countries that have as many or more neighboring states than Germany
+
+- all countries with more than 20 million inhabitants
+
+- all megacities in the world (hint: Descendants instead of Elements)
+
+- the highest mountain of Germany (or of your home country) (hint: string.Split(...))
+
+- all countries in which the religion "Protestant" (or any other as you like) has a share of more than 10%
