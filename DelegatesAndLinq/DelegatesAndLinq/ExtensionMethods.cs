@@ -19,5 +19,13 @@ namespace DelegatesAndLinq
       Console.WriteLine("******************************************************");
       Console.WriteLine(); 
     }
+
+    public static IEnumerable<string> GetTexts()
+    {
+      yield return "Hello";
+      yield return " World";
+      yield return " learning";
+      yield return " C#";
+    }
   }
 }

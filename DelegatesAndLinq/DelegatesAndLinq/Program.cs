@@ -48,15 +48,43 @@ accounts.Sort((a, b) => a.AccountNumber.CompareTo(b.AccountNumber));
 // Language integrated query
 var result = accounts
   .Where(a => a.Balance > 0)
-  .OrderBy(a => a.AccountNumber)
-  .Select(a => new  {  a.Customer, a.Balance });
+  .OrderByDescending(a => a.AccountNumber)
+  .Select(a => new  {  a.Customer, a.Balance })
+  .ToList();
 
 result.Print("using LINQ");
+result.Print("using LINQ");
 
-var aaa = new { Number = 123, Text = "hello" };
-Console.WriteLine(aaa.Number);
-Console.WriteLine(aaa.Text);
-//aaa.Text = "xxx";
+//var result2 = ExtensionMethods.GetTexts()
+//  .Where(t => t.Length == 5);
+
+//result2.Print("Texts");
+
+var result3 =ExtensionMethods.GetTexts()
+  .Where(t => t.Length == 5)
+  .Any();
+Console.WriteLine(result3);
+
+//var micky = accounts
+//  .Where(a => a.Customer == "Micky")
+//  .SingleOrDefault();
+var micky = accounts
+  .SingleOrDefault(a => a.Customer == "Micky");
+
+Console.WriteLine("found: " + (micky?.Customer ?? "nothing found"));
+
+// Language integrated query syntax
+var result4= from a in accounts
+             where a.Balance>0
+             orderby a.AccountNumber descending
+             select new {a.Balance, a.Customer};
+
+
+
+//var aaa = new { Number = 123, Text = "hello" };
+//Console.WriteLine(aaa.Number);
+//Console.WriteLine(aaa.Text);
+////aaa.Text = "xxx";
 
 Console.ReadLine();
 
