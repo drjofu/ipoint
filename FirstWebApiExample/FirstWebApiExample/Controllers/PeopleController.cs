@@ -5,21 +5,32 @@ using Microsoft.AspNetCore.Mvc;
 namespace FirstWebApiExample.Controllers
 {
   [Route("[controller]")]
+  [ApiController]
   public class PeopleController : ControllerBase
   {
-    [HttpGet]
-    public IEnumerable<Person> GetAll()
+    private readonly People people;
+
+    public PeopleController(People people)
     {
-      return People.Instance.Values;
+      this.people = people;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(404, Type = typeof(string))]
+    public IEnumerable<Person> GetAll(/*[FromServices]People people*/)
+    {
+      return people.Values;
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetPerson(int id)
+    public ActionResult<Person> GetPerson(int id)
     {
       //var person = People.Instance.FirstOrDefault(p => p.Id == id);
       //if (person is null)
       //  return NotFound($"Person with Id {id} not in the database");
-      var dict = People.Instance;
+      var dict = people;
 
       if (dict.TryGetValue(id, out var person))
         return Ok(person);
@@ -28,10 +39,22 @@ namespace FirstWebApiExample.Controllers
     }
 
     [HttpPost]
-    public IActionResult AddPerson([FromBody] Person person)
+    public ActionResult<Person> AddPerson(/*[FromBody]*/ Person person)
     {
-      People.Instance.TryAdd(person.Id, person);
-      return Created($"people/{person.Id}", person);
+      //if (!ModelState.IsValid) return BadRequest();
+      if (person.Id != 0)
+        return BadRequest();
+
+      int id = people.Keys.Max() + 1;
+
+      person.Id = id;
+
+      if (!people.TryAdd(id, person))
+        return BadRequest();
+
+      return Created($"/people/{id}", person);
+
+
     }
   }
 }
