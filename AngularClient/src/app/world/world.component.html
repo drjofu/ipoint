@@ -1,0 +1,25 @@
+<h2>Continents</h2>
+
+<table class="table">
+  <tbody>
+    <tr *ngFor="let continent of continents">
+      <td>{{continent.name}}</td>
+      <td>{{continent.area}} km²</td>
+      <td>{{continent.id}}</td>
+      <td><button class="btn btn-success" (click)="showCountries(continent.id)">show countries</button></td>
+   <td><a [routerLink]="['/countries',continent.id]" target="_blank" class="btn btn-info">countries in other route</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="table">
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <td>{{country.name}}</td>
+      <td>{{country.area}} km²</td>
+      <td>{{country.carCode}}</td>
+      <td>{{country.population}}</td>
+    </tr>
+  </tbody>
+</table>

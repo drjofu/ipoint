@@ -1,0 +1,19 @@
+<h1>SignalR Chat Client</h1>
+<div>
+  <label class="form-label">User</label>
+  <input [(ngModel)]="user" class="form-control">
+</div>
+<div>
+  <label class="form-label">Message</label>
+  <input [(ngModel)]="message" class="form-control">
+</div>
+<div>
+  <button (click)="postMessage()" class="btn btn-warning">Senden</button>
+</div>
+<div>
+  <ul>
+    <li *ngFor="let m of messages">
+      {{m}}
+    </li>
+  </ul>
+</div>
