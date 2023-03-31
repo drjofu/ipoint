@@ -1,6 +1,12 @@
 using FirstWebApiExample.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using FirstWebApiExample.Data;
+using FirstWebApiExample.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<FirstWebApiExampleContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FirstWebApiExampleContext") ?? throw new InvalidOperationException("Connection string 'FirstWebApiExampleContext' not found.")));
 
 // define dependecies here
 builder.Services.AddControllers();
@@ -26,4 +32,6 @@ app.MapControllers();
 
 app.MapGet("/", () => "Hello World!");
 app.MapGet("/hello", (string name) => $"Hello {name}");
+
+app.MapPersonEndpoints();
 app.Run();
