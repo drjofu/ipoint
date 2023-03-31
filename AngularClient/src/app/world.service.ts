@@ -8,14 +8,14 @@ import { Continent, Country } from './models';
 })
 export class WorldService {
 
-  baseUrl='http://localhost:5255/';
+  baseUrl='http://localhost:5278/';
   constructor(private httpClient:HttpClient) { }
 
   getContinents(){
-    return lastValueFrom(this.httpClient.get<Continent[]>(this.baseUrl + 'world'));
+    return lastValueFrom(this.httpClient.get<Continent[]>(this.baseUrl + 'continent'));
   }
 
   getCountriesOnContinent(continentId:string){
-    return lastValueFrom(this.httpClient.get<Country[]>(this.baseUrl + 'world/countries?continentid=' + continentId));
+    return lastValueFrom(this.httpClient.get<Country[]>(this.baseUrl + 'country?continentid=' + continentId));
   }
 }
