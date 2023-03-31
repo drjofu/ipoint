@@ -9,6 +9,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<People>();
 
+builder.Services.AddOptions<CompanyInfo>()
+  .Bind(builder.Configuration.GetSection("Company"))
+  .ValidateDataAnnotations()
+  .ValidateOnStart();
+
 var app = builder.Build();
 
 // build pipeline

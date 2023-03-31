@@ -1,5 +1,6 @@
 ﻿using FirstWebApiExample.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace FirstWebApiExample.Controllers
 {
@@ -7,10 +8,29 @@ namespace FirstWebApiExample.Controllers
   public class SampleController : IDisposable
   {
     private readonly IConfiguration configuration;
+    private readonly ILogger<SampleController> logger;
+    private readonly CompanyInfo companyInfo;
 
-    public SampleController(IConfiguration configuration)
+    public SampleController(IConfiguration configuration, IOptions<CompanyInfo> companyInfoOptions, ILogger<SampleController> logger)
     {
       this.configuration = configuration;
+      this.logger = logger;
+      companyInfo = companyInfoOptions.Value;
+    }
+
+    [HttpGet("CompanyInfo2")]
+    public CompanyInfo GetCompanyInfo2()
+    {
+      logger.LogInformation("only for information");
+      logger.LogError("an error occured");
+      // use this
+      logger.LogInformation("company was {companyname} with {count} number of employees", companyInfo.Name, companyInfo.NumberOfEmployees);
+
+      // don't use this:
+      logger.LogInformation($"company was {companyInfo.Name} with {companyInfo.NumberOfEmployees} ...");
+      logger.LogInformation(string.Format("{0}", 123));
+
+      return companyInfo;
     }
 
     [HttpGet("CompanyName")]

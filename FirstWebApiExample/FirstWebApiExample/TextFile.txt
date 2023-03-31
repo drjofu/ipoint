@@ -1,0 +1,4 @@
+﻿environment:
+  Company__Name: ...
+  Company__NumberOfEmployees: 123
+
